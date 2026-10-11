@@ -95,8 +95,14 @@ namespace vamp::planning
                 free_index++;
             }
 
+            const double time_limit_ns = settings.time_limit * 1e9;
             while (iter++ < settings.max_iterations and free_index < settings.max_samples)
             {
+                if (time_limit_ns > 0 and (iter & 255U) == 0 and
+                    static_cast<double>(vamp::utils::get_elapsed_nanoseconds(start_time)) > time_limit_ns)
+                {
+                    break;
+                }
                 float asize = tree_a->size();
                 float bsize = tree_b->size();
                 float ratio = std::abs(asize - bsize) / asize;

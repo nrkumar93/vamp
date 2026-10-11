@@ -16,6 +16,9 @@ namespace vamp::planning
 
         std::size_t max_iterations = 100000;
         std::size_t max_samples = 100000;
+        /// Wall-clock budget for the tree search in seconds; 0 (default) means no time limit
+        /// (iterations and samples alone stop the search). Checked every 256 iterations.
+        double time_limit = 0.0;
         bool start_tree_first = true;
     };
 }  // namespace vamp::planning
